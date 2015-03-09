@@ -1,0 +1,19 @@
+node_modules
+*.DS_Store
+
+# General
+*.log
+
+# OSX
+.DS_Store
+.Spotlight-V100
+.Trashes
+
+# Web
+.sass-cache
+node_modules/
+components/
+*.log
+
+#Misc
+*.sublime-workspace

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- <link rel="stylesheet" href="//bootswatch.com/cosmo/bootstrap.min.css"> -->
+
+<style type="text/css">
+*{
+	font-family:'Helvetica Neue', sans-serif;
+	margin:0;
+	padding:0;
+}
+
+.menu_button{
+	margin:20px;
+}
+</style>
+<title>stage.js example</title>
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="../build/stage.js"></script>
+
+<script charset="utf-8">
+  var timelineJSON = {"settings":{"fps":24,"numFrames":34},"labels":{"in":0,"out":24},"code":{"12":"stop()","34":"gotoAndStop(0);"},"animations":{"line_3":{"settings":{"startFrame":0},"frames":[{"frame":0,"interpolation":"linear","properties":{"alpha":1,"a":1,"b":0,"c":0,"d":1,"tx":1,"ty":22}},{"frame":2,"interpolation":"linear","properties":{"a":0.9962005615234375,"b":-0.087158203125,"c":0.087158203125,"d":0.9962005615234375,"tx":0.95,"ty":23.45}},{"frame":8,"interpolation":"linear","properties":{"a":-0.7659912109375,"b":0.6427764892578125,"c":-0.6427764892578125,"d":-0.7659912109375,"tx":30.7,"ty":5.6}},{"frame":12,"interpolation":"none","properties":{"a":-0.70709228515625,"b":0.7070770263671875,"c":-0.7070770263671875,"d":-0.70709228515625,"tx":29.8,"ty":4.45}},{"frame":24,"interpolation":"linear","properties":{"alpha":1,"a":-0.70709228515625,"b":0.7070770263671875,"c":-0.7070770263671875,"d":-0.70709228515625,"tx":29.8,"ty":4.45}},{"frame":27,"interpolation":"linear","properties":{"a":-0.7659912109375,"b":0.64276123046875,"c":-0.64276123046875,"d":-0.7659912109375,"tx":30.7,"ty":5.6}},{"frame":32,"interpolation":"linear","properties":{"a":0.9962005615234375,"b":-0.087158203125,"c":0.087158203125,"d":0.9962005615234375,"tx":0.95,"ty":23.45}},{"frame":34,"interpolation":"linear","properties":{"a":1,"b":0,"c":0,"d":1,"tx":1,"ty":22}}]},"line_2":{"settings":{"startFrame":0},"frames":[{"frame":0,"interpolation":"linear","properties":{"alpha":1,"a":1,"b":0,"c":0,"d":1,"tx":1,"ty":14}},{"frame":3,"interpolation":"none","properties":{"alpha":0,"a":0.06060791015625,"tx":16.5}},{"frame":29,"interpolation":"linear","properties":{"alpha":0,"a":0.06060791015625,"b":0,"c":0,"d":1,"tx":16.5,"ty":14}},{"frame":33,"interpolation":"none","properties":{"alpha":1,"a":1,"tx":1}},{"frame":34,"interpolation":"linear","properties":{"alpha":1,"a":1,"b":0,"c":0,"d":1,"tx":1,"ty":14}}]},"line_1":{"settings":{"startFrame":0},"frames":[{"frame":0,"interpolation":"linear","properties":{"alpha":1,"a":1,"b":0,"c":0,"d":1,"tx":1,"ty":6}},{"frame":2,"interpolation":"linear","properties":{"a":0.9962005615234375,"b":0.087158203125,"c":-0.087158203125,"d":0.9962005615234375,"tx":1.15,"ty":4.6}},{"frame":8,"interpolation":"linear","properties":{"a":-0.764739990234375,"b":-0.641693115234375,"c":0.641693115234375,"d":-0.764739990234375,"tx":29.4,"ty":26.5}},{"frame":12,"interpolation":"none","properties":{"a":-0.7070770263671875,"b":-0.704742431640625,"c":0.704742431640625,"d":-0.7070770263671875,"tx":28.4,"ty":27.5}},{"frame":24,"interpolation":"linear","properties":{"alpha":1,"a":-0.7070770263671875,"b":-0.704742431640625,"c":0.704742431640625,"d":-0.7070770263671875,"tx":28.4,"ty":27.5}},{"frame":27,"interpolation":"linear","properties":{"a":-0.764739990234375,"b":-0.641693115234375,"c":0.641693115234375,"d":-0.764739990234375,"tx":29.4,"ty":26.5}},{"frame":32,"interpolation":"linear","properties":{"a":0.9962005615234375,"b":0.087158203125,"c":-0.087158203125,"d":0.9962005615234375,"tx":1.15,"ty":4.6}},{"frame":34,"interpolation":"linear","properties":{"a":1,"b":0,"c":0,"d":1,"tx":1,"ty":6}}]}}}
+;
+
+  $(function(){
+		var stage = new Stage({width:35, height:35, fps:22}).appendTo($('canvas')[0]);
+
+		var fixture = {width:33, height:2, fillColor:'#29C57D'};
+    var line1 = stage.createRect(fixture);
+    var line2 = stage.createRect(fixture);
+    var line3 = stage.createRect(fixture);
+
+    var menuButtonMC = stage.createTimeline(timelineJSON, {line_1:line1, line_2:line2, line_3:line3});
+
+    $('.menu_button').click(function(){
+      $(this).toggleClass('close');
+      if ($(this).hasClass('close')){
+        menuButtonMC.gotoAndPlay('in')
+      }
+      else{
+        menuButtonMC.gotoAndPlay('out')
+      }
+    })
+  });
+</script>
+</head>
+<body>
+	<div class="container">
+      <div class="menu_button">
+          <canvas id="menu_canvas" width="35" height="35"></canvas>
+      </div>
+	</div>
+</body>
+</html>

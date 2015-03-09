@@ -1,0 +1,40 @@
+{
+  "name": "stage",
+  "version": "0.0.1",
+  "description": "lightweight canvas wrapper for micro animations",
+  "main": "src/stage.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "clean": "rimraf build; mkdir build;",
+    "build": "npm run clean; browserify  -t babelify -e src/stage.js > build/stage.js; browserify -t babelify -g uglifyify -e src/stage.js > build/stage.min.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "open": "opener http://localhost:5555/examples",
+    "serve": "http-server -p 5555 .",
+    "watch": "watchify -t babelify -e src/stage.js -o build/stage.js && watchify -t babelify -g uglifyify -e src/stage.js -o build/stage.min.js",
+    "dev": "npm run open -s & npm run build -s & parallelshell 'npm run serve -s' 'npm run watch -s'"
+  },
+  "keywords": [
+    "canvas",
+    "frontend",
+    "animation"
+  ],
+  "author": "Henner Woehler <info@henner-woehler.de> (http://www.henner-woehler.de)",
+  "license": "ISC",
+  "devDependencies": {
+    "babelify": "^5.0.4",
+    "browserify": "^9.0.3",
+    "http-server": "^0.7.5",
+    "node-minify": "^1.0.1",
+    "nodemon": "^1.3.7",
+    "parallelshell": "^1.0.4",
+    "rimraf": "^2.3.1",
+    "uglifyify": "^3.0.1",
+    "watchify": "^2.4.0"
+  },
+  "dependencies": {
+    "raf": "^2.0.4",
+    "underscore": "^1.8.2"
+  }
+}
