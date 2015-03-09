@@ -21,7 +21,7 @@
     "animation"
   ],
   "author": "Henner Woehler <info@henner-woehler.de> (http://www.henner-woehler.de)",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "babelify": "^5.0.4",
     "browserify": "^9.0.3",
