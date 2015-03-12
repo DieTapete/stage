@@ -1,10 +1,12 @@
-#TODO
+#stage.js
+
+##TODO
 - support easing in timeline interpolation
 - make frame codes really work instead of workaround
 
-##BUGS
-- Only one line of code works in code frames
+###KNOWN BUGS
+- Only one line of code works in code frames. No comments are supported.
 
-##Optimizations
+###OPTIMIZATIONS
 - optimize timeline update method to not run through each frame every time
 - Optimize string concatenation in ``mapProperties`` in ``SVGRenderer``
