@@ -2,8 +2,8 @@
   var raf = require('raf'),
       _ = require('underscore');
 
-  var DisplayObject = require('./displayobject');
-  var Timeline = require('./timeline');
+  var DisplayObject = require('./displayobject'),
+      Timeline = require('./timeline');
 
   var root = this || window;
 
@@ -11,13 +11,30 @@
     var t = {width:options.width, height:options.height, fps: options.fps || 25, forceUpdate: true};
     var domElement, context,
         timelines = [], elements = [],
-        then = Date.now();
+        then = Date.now(),
+        renderer;
 
     t.appendTo = function(element) {
       if(_.isElement(element)){
         domElement = element;
-        context = domElement.getContext('2d');
+        var tagName = domElement.tagName.toLowerCase(),
+            RenderModule;
+
+        if (tagName === 'canvas') {
+          RenderModule = require('./renderer/canvasrenderer');
+        }
+        else if (tagName === 'svg') {
+          RenderModule = require('./renderer/svgrenderer');
+        }
+        else {
+          throw "Stage must be appended to either a canvas or a svg element. Element is "+domElement.tagName;
+        }
+
+        if (RenderModule) {
+          renderer = new RenderModule(domElement, {width:t.width, height:t.height});
+        }
       }
+
       init();
       return t;
     };
@@ -27,7 +44,7 @@
         throw "Stage is not connected to a Canvas element. Use 'appendTo' to connect it, first.";
       }
 
-      var element =  new DisplayObject(context, properties)
+      var element =  new DisplayObject(renderer, properties)
       elements.push(element)
       return element;
     }
@@ -47,27 +64,20 @@
     		var interval = 1000/t.fps;
 
         if (t.forceUpdate || delta >= interval) {
-
-          t.forceUpdate = false;
           then = now - (delta % interval);
+          var dirty = t.forceUpdate;
+          t.forceUpdate = false;
 
-          var cleared = false;
           for (var i = timelines.length-1; i>=0; i--) {
             var timeline = timelines[i]
-            if (timeline.playing() || timeline.forceUpdate){
-              if (!cleared) {
-                context.clearRect ( 0 , 0 , domElement.width, domElement.height );
-                cleared = true;
-              }
+            if (timeline.playing() || dirty){
+              dirty = true;
               timeline.update();
             }
           }
 
-          for (i = elements.length-1; i>=0; i--) {
-            var element = elements[i]
-            if (element.needsUpdate){
-              element.render();
-            }
+          if (dirty) {
+            renderer.render(elements);
           }
         }
 

@@ -1,34 +1,35 @@
-module.exports = function(context, properties) {
+module.exports = function(renderer, properties) {
   var t = {
-     context:context,
-     x:0,y:0,
-     regX:50, regY:50,
-     rotation:0,
-     width: 100, height: 100,
-     transform:null,
-     a:0, b:0, c:0, d:0, tx:0, ty:0,
-     alpha:1, fillColor:'black', strokeColor:'white',
-     needsUpdate: true
+     renderer:renderer,
+     needsUpdate: true,
+     uid: renderer.getUID(),
+     properties:{ x:0, y:0,
+                  width: 100, height: 100,
+                  regX:50, regY:50,
+                  rotation:0,
+                  transform:null,
+                  a:0, b:0, c:0, d:0, tx:0, ty:0,
+                  alpha:1, fillColor:'black', strokeColor:'white'}
    };
 
   //Override this as needed
   t.render = function(){
-    var c = t.context;
-    c.save();
-
-    c.setTransform(t.a, t.b, t.c, t.d, t.tx, t.ty);
-    c.globalAlpha = this.alpha;
-    c.fillStyle = this.fillColor;
-    c.fillRect(0, 0, this.width, this.height);
-
-    c.restore();
+    renderer.render(t);
     t.needsUpdate = false;
   };
 
   t.set = function(properties){
+    var needsUpdate = t.needsUpdate;
+
     for (var prop in properties){
-      t[prop] = properties[prop];
+      var value = properties[prop];
+
+      if (t.properties[prop] != value) {
+        t.properties[prop] = value;
+        needsUpdate = true;
+      }
     }
+    t.needsUpdate = needsUpdate;
   };
 
   t.set(properties);

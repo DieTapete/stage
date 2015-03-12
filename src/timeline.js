@@ -7,8 +7,7 @@ module.exports = function(timelineData, elements){
 		code : timelineData.code || {},
 		settings:timelineData.settings || {fps:24},
 		elements: elements,
-		currentFrame : 0,
-    forceUpdate: true
+		currentFrame : 0
 	};
 
 	t.playing = function(){
@@ -130,10 +129,7 @@ module.exports = function(timelineData, elements){
   };
 
   t.setProperties = function(element, properties){
-  	for (var prop in properties){
-  		element[prop] = properties[prop];
-  	}
-    element.needsUpdate = true;
+  	element.set(properties);
   };
 
   t.frameToMillis = function(frame, fps){

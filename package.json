@@ -12,7 +12,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "open": "opener http://localhost:5555/examples",
     "serve": "http-server -p 5555 .",
-    "watch": "watchify -t babelify -e src/stage.js -o build/stage.js && watchify -t babelify -g uglifyify -e src/stage.js -o build/stage.min.js",
+    "watch": "watchify -t babelify -e src/stage.js --debug -o build/stage.js && watchify -t babelify -g uglifyify -e src/stage.js -o build/stage.min.js",
     "dev": "npm run open -s & npm run build -s & parallelshell 'npm run serve -s' 'npm run watch -s'"
   },
   "keywords": [
