@@ -1,4 +1,4 @@
-#stage.js
+# stage.js
 Export animations from Flash to JSON and render them with the Canvas- or SVG-Renderer.
 
 **Warning: The library is in an early state and not really usable to anyone else than me right now.**
